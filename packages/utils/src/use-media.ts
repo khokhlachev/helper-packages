@@ -46,7 +46,7 @@ export function useMedia<T>(
 type MediaProps = {
   query: string;
 };
-export const MediaElement: FC<MediaProps> = ({ query, children }) => {
+export const Media: FC<MediaProps> = ({ query, children }) => {
   const canRender = useMedia<boolean>([query], [true], false);
 
   return canRender ? createElement(Fragment, { children }) : null;

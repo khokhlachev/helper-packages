@@ -72,3 +72,9 @@ export function range(...args: number[]): number[] {
 }
 
 export { createError, createLogger } from "./logger";
+export { default as connectMiddleware } from "./connect-middleware";
+export { RafValue } from "./raf-value";
+export * as math from "./math";
+export { useClientOnly, ClientOnly } from "./use-client-only";
+export { useMeasure } from "./use-measure";
+export { useMedia, Media } from "./use-media";
