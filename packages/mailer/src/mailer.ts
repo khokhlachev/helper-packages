@@ -60,7 +60,7 @@ export class Mailer<T extends AnyObject> {
   public async send(config: MailerConfig): Promise<void>;
   public async send(config: Omit<MailerConfig, "html">, body: T): Promise<void>;
   public async send(config: any, body?: T): Promise<void> {
-    if (body) {
+    if (config?.html === undefined && body) {
       config.html = this.formatMessage(body);
     }
 
