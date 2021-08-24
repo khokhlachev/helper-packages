@@ -26,12 +26,12 @@
     "build:es": "tsc -m esNext --outDir esm",
     "build": "yarn build:cjs && yarn build:es"
   },
-  "peerDependencies": {
-    "chalk": ">=4.0.0",
-    "react": ">=17.0.0"
-  },
   "dependencies": {
+    "chalk": "^4.1.2",
     "yup": "^0.32.9"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0"
   },
   "devDependencies": {
     "@types/node": "^16.7.1",
@@ -41,6 +41,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "gitHead": "7dc5bf854df4ba4b4dcbd0df2d774aaf3b99467c"
+  }
 }
