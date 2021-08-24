@@ -37,7 +37,7 @@ export class Mailer<T extends AnyObject> {
     this.formatMessage = options.formatMessage || defaultFormatMessage;
   }
 
-  public async validate(body: T): Promise<T> {
+  validate(body: T): Promise<T> {
     const ownKeys = Object.keys(body) as (keyof T)[];
     for (const k of ownKeys) {
       const v = body[k];
@@ -49,21 +49,17 @@ export class Mailer<T extends AnyObject> {
 
     return this.schema
       .validate(body, { abortEarly: false })
-      .then(() => {
-        return Promise.resolve(body);
-      })
-      .catch((err: ValidationError) => {
-        return Promise.reject(stringifyYupValidationError(err));
-      });
+      .then(() => body)
+      .catch((err) => Promise.reject(stringifyYupValidationError(err)));
   }
 
-  public async send(config: MailerConfig): Promise<void>;
-  public async send(config: Omit<MailerConfig, "html">, body: T): Promise<void>;
-  public async send(config: any, body?: T): Promise<void> {
-    if (config?.html === undefined && body) {
+  send(config: MailerConfig): Promise<void>;
+  send(config: Omit<MailerConfig, "html">, body: T): Promise<void>;
+  send(config: any, body?: T): Promise<void> {
+    if (config && config.html === undefined && body) {
       config.html = this.formatMessage(body);
     }
 
-    return await this.transport.send(config, body);
+    return this.transport.send(config, body);
   }
 }
