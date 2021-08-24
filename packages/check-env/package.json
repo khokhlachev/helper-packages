@@ -31,7 +31,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@khokhlachev/utils": ">=0.0.0",
+    "@khokhlachev/utils": "^0.0.2",
     "chalk": "^4.1.2"
   },
   "publishConfig": {
