@@ -1,0 +1,18 @@
+{
+  "name": "root",
+  "private": true,
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "clean": "yarn lerna clean -y && yarn lerna bootstrap && yarn lerna exec 'rm -rf ./{lib,esm}'",
+    "lerna": "lerna",
+    "build": "yarn lerna run build",
+    "publish": "yarn lerna publish"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0",
+    "typescript": "^4.3.5"
+  }
+}

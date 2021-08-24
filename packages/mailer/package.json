@@ -1,0 +1,58 @@
+{
+  "name": "@khokhlachev/mailer",
+  "version": "0.0.1",
+  "description": "Personal email client",
+  "author": "@khokhlachev",
+  "homepage": "https://github.com/khokhlachev/helper-packages",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
+  "typings": "lib/index.d.ts",
+  "sideEffects": false,
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib",
+    "esm",
+    "*.md"
+  ],
+  "scripts": {
+    "build:cjs": "tsc",
+    "build:es": "tsc -m esNext --outDir esm",
+    "build": "yarn build:cjs && yarn build:es",
+    "prepublish": "yarn build",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@khokhlachev/check-env": ">=0.0.0",
+    "@khokhlachev/utils": ">=0.0.0",
+    "yup": "^0.32.9"
+  },
+  "peerDependencies": {
+    "@mailchimp/mailchimp_marketing": ">=3.0.58",
+    "mailgun-js": ">=0.22.0"
+  },
+  "peerDependenciesMeta": {
+    "@mailchimp/mailchimp_marketing": {
+      "optional": true
+    },
+    "mailgun-js": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@mailchimp/mailchimp_marketing": "^3.0.58",
+    "@types/mailchimp__mailchimp_marketing": "^3.0.2",
+    "@types/mailgun-js": "^0.22.12",
+    "@types/node": "^16.7.1",
+    "mailgun-js": "^0.22.0",
+    "typescript": "^4.3.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "7dc5bf854df4ba4b4dcbd0df2d774aaf3b99467c"
+}
