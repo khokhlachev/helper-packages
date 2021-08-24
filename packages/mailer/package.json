@@ -5,25 +5,38 @@
   "author": "@khokhlachev",
   "homepage": "https://github.com/khokhlachev/helper-packages",
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": "index.js",
   "module": "esm/index.js",
-  "types": "lib/index.d.ts",
-  "typings": "lib/index.d.ts",
+  "types": "index.d.ts",
+  "typings": "index.d.ts",
   "sideEffects": false,
   "directories": {
-    "lib": "lib",
+    "esm": "esm",
     "test": "__tests__"
   },
   "files": [
-    "lib",
     "esm",
-    "*.md"
+    "*.md",
+    "index.d.ts",
+    "index.js",
+    "mailchimp-transport.d.ts",
+    "mailchimp-transport.js",
+    "mailer.d.ts",
+    "mailer.js",
+    "mailgun-transport.d.ts",
+    "mailgun-transport.js",
+    "types.d.ts",
+    "types.js",
+    "validate-recaptcha.d.ts",
+    "validate-recaptcha.js"
   ],
   "scripts": {
+    "clear": "rm -rf {index,mailchimp-transport,mailer,mailgun-transport,types,validate-recaptcha}{.d.ts,.js} esm/",
     "build:cjs": "tsc",
     "build:es": "tsc -m esNext --outDir esm",
     "build": "yarn build:cjs && yarn build:es",
     "prepublish": "yarn build",
+    "postpublish": "yarn clear",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
