@@ -1,6 +1,6 @@
 {
   "name": "@khokhlachev/mailer",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Personal email client",
   "author": "@khokhlachev",
   "homepage": "https://github.com/khokhlachev/helper-packages",
@@ -40,8 +40,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@khokhlachev/check-env": "^1.0.4",
-    "@khokhlachev/utils": "^1.0.4",
+    "@khokhlachev/check-env": "^1.0.5",
+    "@khokhlachev/utils": "^1.0.5",
     "yup": "^0.32.9"
   },
   "peerDependencies": {
