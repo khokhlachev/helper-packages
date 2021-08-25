@@ -1,15 +1,56 @@
 import chalk from "chalk";
+import { AnyObject } from "./types";
 
-export const createLogger = (prefix: string) => ({
-  log: (msg: string) => console.log(`${chalk.bold(prefix)}: ${msg}`),
-  error: (msg: string) => console.error(`${chalk.red.bold(prefix)}: ${msg}`),
-});
+function logger(...args: any[]) {
+  console.log.apply(null, args);
+}
 
-export const createError = (prefix: string) => {
+logger.json = (obj: AnyObject) => {
+  logger("\n", JSON.stringify(obj, null, 2), "\n");
+};
+
+logger.error = (...args: any[]) => {
+  console.error.apply(null, args);
+};
+
+logger.warn = (...args: any[]) => {
+  console.warn.apply(null, args);
+};
+
+logger.success = (...args: any[]) => {
+  console.log.apply(null, args);
+};
+
+const colorMap = {
+  default: chalk.bold,
+  error: chalk.bold.red,
+  warn: chalk.bold.yellow,
+  success: chalk.bold.green,
+};
+
+export function createLogger(prefix: string) {
+  const proxyLogger = Object.assign(function (...args: any[]) {
+    return logger.apply(null, [`${colorMap.default(prefix)}`].concat(args));
+  }, logger);
+
+  return new Proxy(proxyLogger, {
+    get(target, prop) {
+      const origMethod = target[prop];
+
+      return (...args: any[]) => {
+        const format = colorMap[prop] || colorMap.default;
+
+        origMethod.apply(this, [`${format(prefix)}`].concat(args));
+      };
+    },
+  });
+}
+
+export function createError(prefix: string) {
   const logger = createLogger(prefix);
 
-  return (msg: string) => {
-    logger.error(msg);
+  return function error(...args: any[]) {
+    logger.error.apply(null, args);
     process.exit(1);
   };
-};
+}
