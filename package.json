@@ -9,9 +9,16 @@
     "clean": "yarn lerna clean -y && yarn lerna bootstrap && yarn lerna exec 'rm -rf ./{lib,esm}'",
     "lerna": "lerna",
     "build": "yarn lerna run build",
-    "publish": "yarn lerna publish"
+    "publish": "yarn lerna publish",
+    "test": "jest"
   },
   "devDependencies": {
+    "@babel/core": "7.15.0",
+    "@babel/preset-env": "7.15.0",
+    "@babel/preset-typescript": "7.15.0",
+    "@types/jest": "27.0.1",
+    "babel-jest": "27.0.6",
+    "jest": "^27.0.6",
     "lerna": "^4.0.0",
     "typescript": "^4.3.5"
   }
