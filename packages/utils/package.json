@@ -15,29 +15,31 @@
     "test": "__tests__"
   },
   "files": [
-    "lib",
     "esm",
-    "*.md"
+    "*.md",
+    "index.js",
+    "index.d.ts",
+    "logger.js",
+    "logger.d.ts",
+    "math.js",
+    "math.d.ts",
+    "types.js",
+    "types.d.ts"
   ],
   "scripts": {
+    "clear": "rm -rf {index,logger,math,types}{.js,.d.ts} esm",
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "prepublish": "yarn build",
+    "prepublish": "yarn clear && yarn build",
+    "postpublish": "yarn clear",
     "build:cjs": "tsc",
     "build:es": "tsc -m esNext --outDir esm",
     "build": "yarn build:cjs && yarn build:es"
   },
   "dependencies": {
-    "chalk": "^4.1.2",
-    "yup": "^0.32.9"
-  },
-  "peerDependencies": {
-    "react": ">=16.0.0 || >=17.0.0"
+    "chalk": "^4.1.2"
   },
   "devDependencies": {
-    "@types/node": "^16.7.1",
-    "@types/react": "^17.0.19",
-    "react": "^17.0.2",
-    "yup": "^0.32.9"
+    "@types/node": "^16.7.1"
   },
   "publishConfig": {
     "access": "public"

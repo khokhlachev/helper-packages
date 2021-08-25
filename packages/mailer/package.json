@@ -34,7 +34,7 @@
     "clear": "rm -rf {index,mailchimp-transport,mailer,mailgun-transport,types,validate-recaptcha}{.d.ts,.js} esm/",
     "build:cjs": "tsc",
     "build:es": "tsc -m esNext --outDir esm",
-    "build": "yarn build:cjs && yarn build:es",
+    "build": "yarn clear && yarn build:cjs && yarn build:es",
     "prepublish": "yarn build",
     "postpublish": "yarn clear",
     "test": "echo \"Error: run tests from root\" && exit 1"
