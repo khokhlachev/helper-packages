@@ -16,6 +16,7 @@
   },
   "files": [
     "esm",
+    "lib",
     "*.md",
     "index.d.ts",
     "index.js",
@@ -36,7 +37,6 @@
     "build:es": "tsc -m esNext --outDir esm",
     "build": "yarn clear && yarn build:cjs && yarn build:es",
     "prepublish": "yarn build",
-    "postpublish": "yarn clear",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {

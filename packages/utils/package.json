@@ -16,6 +16,7 @@
   },
   "files": [
     "esm",
+    "lib",
     "*.md",
     "index.js",
     "index.d.ts",
@@ -30,7 +31,6 @@
     "clear": "rm -rf {lib,esm}",
     "test": "echo \"Error: run tests from root\" && exit 1",
     "prepublish": "yarn clear && yarn build",
-    "postpublish": "yarn clear",
     "build:cjs": "tsc",
     "build:es": "tsc -m esNext --outDir esm",
     "build": "yarn build:cjs && yarn build:es"
