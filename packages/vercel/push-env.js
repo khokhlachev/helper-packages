@@ -1,1 +1,2 @@
-module.exports = require("./lib/push-env.js")
+const { processEnvFile } = require("./lib/push-env.js");
+processEnvFile();

@@ -12,47 +12,16 @@ import { createError, createLogger } from "@khokhlachev/utils";
 import arg from "arg";
 import { execSync } from "child_process";
 
-const args = arg({
-  "--env": String,
-});
-
-const environment = args["--env"] || "";
-
 const dot = (str?: string) => (str ? `.${str}` : "");
 
 const MODULE_NAME = "push-env-vercel";
-const envFile = path.join(process.cwd(), `./.env${dot(environment)}`);
 
 const logger = createLogger(MODULE_NAME);
 const error = createError(MODULE_NAME);
 
-if (!fs.existsSync(envFile)) {
-  error(`${envFile} does not exist`);
-}
-
-try {
-  execSync("vercel --version", {
-    stdio: "ignore",
-  });
-} catch (e) {
-  error("Vercel CLI is not installed. See https://vercel.com/docs/cli");
-}
-
-try {
-  const { projectId, orgId } = JSON.parse(
-    fs.readFileSync(path.join(process.cwd(), "./.vercel/project.json"), "utf8")
-  );
-
-  if (!projectId || !orgId) {
-    throw new Error();
-  }
-} catch (e) {
-  error("Project is not linked. Run `vercel link` to begin.");
-}
-
-function add(key: string, value: string) {
+function add(key: string, value: string, environment: string) {
   try {
-    execSync(`echo "${value}" | vercel env add ${key} ${environment}`, {
+    execSync(`printf "${value}" | vercel env add ${key} ${environment}`, {
       stdio: "pipe",
     });
 
@@ -64,8 +33,8 @@ function add(key: string, value: string) {
       )
     ) {
       logger(`Variable ${key} exists. Removing...`);
-      rm(key);
-      add(key, value);
+      rm(key, environment);
+      add(key, value, environment);
     } else {
       // Something went really wrong
       error(err.message);
@@ -73,34 +42,85 @@ function add(key: string, value: string) {
   }
 }
 
-function rm(k: string) {
+function rm(k: string, environment: string) {
   execSync(`vercel env rm ${k} ${environment} -y`, {
     stdio: "ignore",
   });
 }
 
-const io = readline.createInterface({
-  input: fs.createReadStream(envFile),
-});
+export function parseLine(line: string): (string | undefined)[] {
+  const [_, k, v] = line.match(/^(\w+)=(.+)/) || [];
+  return [k, v];
+}
 
-io.on("line", (line) => {
-  if (!line || line.startsWith("#")) {
-    return;
+export function parseFile(
+  path: string,
+  callback: (key: string, value: string) => void
+) {
+  if (!fs.existsSync(path)) {
+    error(`${path} does not exist`);
   }
 
-  const [_, k, v] = line.match(/^(\w+)=(.+)$/) || [];
+  const io = readline.createInterface({
+    input: fs.createReadStream(path),
+  });
 
-  if (!k || !v) {
-    return;
+  io.on("line", (line) => {
+    if (!line || line.startsWith("#")) {
+      return;
+    }
+
+    const [k, v] = parseLine(line);
+
+    if (!k || !v) {
+      return;
+    }
+
+    callback(k, v);
+  });
+
+  io.on("close", () => {
+    logger.success("👌");
+  });
+}
+
+export function processEnvFile() {
+  const args = arg({
+    "--env": String,
+  });
+
+  const environment = args["--env"] || "";
+
+  try {
+    execSync("vercel --version", {
+      stdio: "ignore",
+    });
+  } catch (e) {
+    error("Vercel CLI is not installed. See https://vercel.com/docs/cli");
   }
 
   try {
-    add(k, v);
-  } catch (e) {
-    logger.error("line", e);
-  }
-});
+    const { projectId, orgId } = JSON.parse(
+      fs.readFileSync(
+        path.join(process.cwd(), "./.vercel/project.json"),
+        "utf8"
+      )
+    );
 
-io.on("close", () => {
-  logger.success("👌");
-});
+    if (!projectId || !orgId) {
+      throw new Error();
+    }
+  } catch (e) {
+    error("Project is not linked. Run `vercel link` to begin.");
+  }
+
+  const envFilePath = path.join(process.cwd(), `./.env${dot(environment)}`);
+
+  parseFile(envFilePath, (key, value) => {
+    try {
+      add(key, value, environment);
+    } catch (e) {
+      logger.error("line", e);
+    }
+  });
+}
