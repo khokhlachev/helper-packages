@@ -31,7 +31,7 @@
     "validate-recaptcha.js"
   ],
   "scripts": {
-    "clear": "rm -rf {index,mailchimp-transport,mailer,mailgun-transport,types,validate-recaptcha}{.d.ts,.js} esm/",
+    "clear": "rm -rf {esm,lib}",
     "build:cjs": "tsc",
     "build:es": "tsc -m esNext --outDir esm",
     "build": "yarn clear && yarn build:cjs && yarn build:es",

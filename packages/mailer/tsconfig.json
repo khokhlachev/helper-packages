@@ -15,7 +15,7 @@
     "noImplicitReturns": true,
     "noImplicitAny": false,
     "noFallthroughCasesInSwitch": true,
-    "outDir": ".",
+    "outDir": "lib",
     "lib": [
       "es2018",
       "dom"
@@ -26,6 +26,7 @@
     "node_modules",
     "lib",
     "esm",
+    "./*.d.ts",
     "__tests__",
     "stories",
     "jest.config.ts",

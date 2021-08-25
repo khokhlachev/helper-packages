@@ -27,7 +27,7 @@
     "types.d.ts"
   ],
   "scripts": {
-    "clear": "rm -rf {index,logger,math,types}{.js,.d.ts} esm",
+    "clear": "rm -rf {lib,esm}",
     "test": "echo \"Error: run tests from root\" && exit 1",
     "prepublish": "yarn clear && yarn build",
     "postpublish": "yarn clear",

@@ -33,7 +33,7 @@
     "url": "git+https://github.com/khokhlachev/helper-packages.git"
   },
   "scripts": {
-    "clear": "rm -rf {index,raf-value,use-client-only,use-measure,use-media}{.js,.d.ts} esm",
+    "clear": "rm -rf {esm,lib}",
     "build:cjs": "tsc",
     "build:es": "tsc -m esNext --outDir esm",
     "build": "yarn clear && yarn build:cjs && yarn build:es",
