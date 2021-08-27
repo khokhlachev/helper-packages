@@ -45,7 +45,9 @@
     "url": "https://github.com/khokhlachev/helper-packages/issues"
   },
   "dependencies": {
-    "@khokhlachev/utils": "^1.0.6"
+    "@khokhlachev/utils": "^1.0.6",
+    "body-scroll-lock": "4.0.0-beta.0",
+    "react-use": "^17.2.0"
   },
   "devDependencies": {
     "@types/react": "17.0.19",
