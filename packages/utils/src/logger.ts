@@ -49,8 +49,13 @@ export function createLogger(prefix: string) {
 export function createError(prefix: string) {
   const logger = createLogger(prefix);
 
-  return function error(...args: any[]) {
+  return function error(...args: any[]): never {
     logger.error.apply(null, args);
-    process.exit(1);
+
+    if (typeof global !== "undefined") {
+      process.exit(1);
+    } else {
+      throw new Error(`${prefix}: Error. See console output.`);
+    }
   };
 }
