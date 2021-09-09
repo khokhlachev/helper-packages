@@ -7,7 +7,7 @@ import {
   Fragment,
 } from "react";
 
-export function useClientOnly() {
+export function useMounted() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export function useClientOnly() {
 export const ClientOnly: FC<{
   placeholder?: ReactNode;
 }> = ({ children, placeholder }) => {
-  const mounted = useClientOnly();
+  const mounted = useMounted();
 
   if (!mounted) {
     return createElement(Fragment, { children: placeholder }) || null;

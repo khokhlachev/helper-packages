@@ -5,10 +5,10 @@
   "author": "Sergey Khokhlachev <sergey@khokhlachev.com>",
   "homepage": "https://github.com/khokhlachev/helper-packages#readme",
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib/index.js",
   "module": "esm/index.js",
-  "types": "index.d.ts",
-  "typings": "index.d.ts",
+  "types": "lib/index.d.ts",
+  "typings": "lib/index.d.ts",
   "sideEffects": false,
   "directories": {
     "esm": "esm",
@@ -17,17 +17,7 @@
   "files": [
     "esm",
     "lib",
-    "*.md",
-    "index.js",
-    "index.d.ts",
-    "raf-value.js",
-    "raf-value.d.ts",
-    "use-client-only.js",
-    "use-client-only.d.ts",
-    "use-measure.js",
-    "use-measure.d.ts",
-    "use-media.js",
-    "use-media.d.ts"
+    "*.md"
   ],
   "repository": {
     "type": "git",
