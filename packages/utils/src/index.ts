@@ -1,10 +1,14 @@
-export const empty = (value: any) => {
+export function empty<T>(value: T | null | undefined): value is never {
   if (Array.isArray(value)) {
     return value.length === 0;
   }
 
   return !!value;
-};
+}
+
+export function notEmpty<T>(value: T | null | undefined): value is T {
+  return value !== null && value !== undefined;
+}
 
 export const equalKeys = <A = any>(
   objectA: A,
@@ -55,6 +59,14 @@ export function splitText(text: string | string[]): string[][] {
   }
 
   return [];
+}
+
+export function leftPad(string: string, length: number, chars: string) {
+  while (string.length < length) {
+    string = `${chars}${string}`;
+  }
+
+  return string;
 }
 
 export function range(start: number): number[];
