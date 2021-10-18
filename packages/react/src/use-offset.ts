@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import useIsomorphicLayoutEffect from "./use-isomorphic-layout-effect";
+import { useIsomorphicLayoutEffect } from "./use-isomorphic-layout-effect";
 
 /**
  * Get offset of DOM element
