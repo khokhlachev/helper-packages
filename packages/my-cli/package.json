@@ -1,0 +1,47 @@
+{
+  "name": "@khokhlachev/my-cli",
+  "version": "1.0.0",
+  "description": "Own helper CLI",
+  "author": "Sergey Khokhlachev <sergey@khokhlachev.com>",
+  "homepage": "https://github.com/khokhlachev/helper-packages#readme",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "sideEffects": false,
+  "directories": {
+    "templates": "templates",
+    "test": "__tests__"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "bin": "./index.js",
+  "files": [
+    "index.js",
+    "prismic-custom-types-api.js",
+    "templates/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khokhlachev/helper-packages.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/khokhlachev/helper-packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@khokhlachev/utils": "^1.0.8",
+    "arg": "^5.0.1",
+    "brace-expansion": "^2.0.1",
+    "chalk": "^4.1.2",
+    "change-case": "^4.1.2",
+    "dotenv": "^10.0.0",
+    "fs-extra": "^10.0.0",
+    "globby": "^12.0.2"
+  }
+}
