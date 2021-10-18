@@ -1,13 +1,15 @@
 import { createBreakpoint } from "react-use";
 import { typedKeys } from "@khokhlachev/utils/types";
 import { createLogger } from "@khokhlachev/utils";
+import { createElement, ReactNode, Fragment } from "react";
+import { useMounted } from "./use-client-only";
 
 const logger = createLogger("useBreakpoint");
 
 type Screens = {
-  "4xl": string;
-  "3xl": string;
-  "2xl": string;
+  "4xl"?: string;
+  "3xl"?: string;
+  "2xl"?: string;
   xl: string;
   lg: string;
   md: string;
@@ -25,7 +27,7 @@ const NOT_SET = "NOT_SET";
 
 function screensToBreakpoints<T extends TailwindConfig>(config: T) {
   return typedKeys(config.theme.screens).reduce((acc, k) => {
-    acc[k] = parseInt(config.theme.screens[k]);
+    acc[k] = parseInt(config.theme.screens[k] ?? "");
     return acc;
   }, {} as Breakpoints);
 }
@@ -55,3 +57,19 @@ useBreakpoint.__setTailwindConfig = function setTailwindConfig<
 >(config: T) {
   useBreakpoints = createBreakpoint(screensToBreakpoints(config));
 };
+
+type BreakpointProps = {
+  screen: keyof ReturnType<typeof useBreakpoint>;
+  children: ReactNode;
+};
+export function Breakpoint({ children, screen }: BreakpointProps) {
+  const bps = useBreakpoint();
+  const mounted = useMounted();
+  return mounted && bps[screen] ? createElement(Fragment, { children }) : null;
+}
+
+export function BreakpointUpTo({ children, screen }: BreakpointProps) {
+  const bps = useBreakpoint();
+  const mounted = useMounted();
+  return mounted && !bps[screen] ? createElement(Fragment, { children }) : null;
+}
