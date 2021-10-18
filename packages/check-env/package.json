@@ -1,6 +1,6 @@
 {
   "name": "@khokhlachev/check-env",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Personal env variables validator",
   "author": "@khokhlachev",
   "homepage": "https://github.com/khokhlachev/helper-packages",
@@ -32,7 +32,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@khokhlachev/utils": "^1.0.8",
+    "@khokhlachev/utils": "^1.0.9",
     "chalk": "^4.1.2"
   },
   "publishConfig": {
