@@ -69,6 +69,20 @@ export function leftPad(string: string, length: number, chars: string) {
   return string;
 }
 
+export function formatISOString(string: string, mask = "dd.MM") {
+  return string.replace(
+    /^(\d{2,4})-(\d{2})-(\d{2})T?(\d{2})?:?(\d{2})?.*/,
+    function (_, yyyy, MM, dd, hh = "00", mm = "00") {
+      const parts: Record<string, string> = { yyyy, dd, MM, hh, mm }
+      const separator = mask.replace(/\w/g, "")[0]
+      return mask
+        .split(separator)
+        .map((part) => parts[part])
+        .join(separator)
+    }
+  )
+}
+
 export function range(start: number): number[];
 export function range(start: number, end: number): number[];
 export function range(...args: number[]): number[] {
