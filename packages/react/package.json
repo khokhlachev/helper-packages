@@ -1,6 +1,6 @@
 {
   "name": "@khokhlachev/react",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Collection of helpers for React.js",
   "author": "Sergey Khokhlachev <sergey@khokhlachev.com>",
   "homepage": "https://github.com/khokhlachev/helper-packages#readme",
@@ -35,7 +35,7 @@
     "url": "https://github.com/khokhlachev/helper-packages/issues"
   },
   "dependencies": {
-    "@khokhlachev/utils": "^1.0.9",
+    "@khokhlachev/utils": "^1.0.10",
     "react-use": "^17.2.0"
   },
   "devDependencies": {
