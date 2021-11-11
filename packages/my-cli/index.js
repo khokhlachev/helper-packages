@@ -14,13 +14,12 @@ import { createLogger, createError } from "@khokhlachev/utils";
 import chalk from "chalk";
 import { globby } from "globby";
 import * as customTypesApi from "./custom-types/prismic.js";
+import config from "./shared/config.js";
 
 const { outputFileSync, appendFileSync } = fs;
 
-const PACKAGE_NAME = "my-cli";
-
-const log = createLogger(PACKAGE_NAME);
-const error = createError(PACKAGE_NAME);
+const log = createLogger(config.name);
+const error = createError(config.name);
 const cwd = process.cwd();
 
 // humanize path
@@ -36,8 +35,10 @@ function getRouteParamName(routeName) {
   return routeName.replace(/.*\[(.+)\].*/, "$1");
 }
 
-const TYPES_PATH = resolve("lib/prismic/types.ts");
-const GETTER_ALL_EXPORTS_PATH = resolve("lib/prismic/getters/index.ts");
+const resolvePrismicRoot = (...segments) =>
+  resolve(config.prismic.rootDir, ...segments);
+const TYPES_PATH = resolvePrismicRoot("types.ts");
+const GETTER_ALL_EXPORTS_PATH = resolvePrismicRoot("getters/index.ts");
 
 function createPageCommand(args, routeNames) {
   function createPage(routeName) {
@@ -86,8 +87,8 @@ function createPageComponentCommand(args, routeNames) {
 function createPageGetterCommand(args, routeNames) {
   function createGetter(routeName) {
     const getterName = getPageName(args, routeName);
-    const outputPath = resolve(
-      "lib/prismic/getters",
+    const outputPath = resolvePrismicRoot(
+      "getters",
       `${paramCase(getterName)}.ts`
     );
     const routeParamName = getRouteParamName(routeName);
@@ -121,7 +122,7 @@ function createPageGetterCommand(args, routeNames) {
 async function createPrismicTypeCommand(args, routeNames) {
   async function createCustomType(routeName) {
     const typeName = snakeCase(routeName);
-    const outputPath = resolve("lib/prismic/custom-types", `${typeName}.json`);
+    const outputPath = resolvePrismicRoot("custom-types", `${typeName}.json`);
 
     // write custom type
     outputFileSync(
@@ -168,7 +169,7 @@ async function updatePrismicTypeCommand(args, routeNames) {
 }
 
 async function updateAllPrismicTypeCommand() {
-  const allPaths = await globby(["lib/prismic/custom-types/*.json"]);
+  const allPaths = await globby([resolvePrismicRoot("custom-types/*.json")]);
   await updatePrismicTypeCommand(
     {},
     allPaths.map((fullPath) => basename(fullPath).replace(".json", ""))
@@ -179,7 +180,7 @@ async function dumpPrismicTypeCommand(args, routeNames) {
   async function dumpPrismicType(routeName) {
     const typeName = routeName;
     const data = await customTypesApi.getCustomType(typeName);
-    const outputPath = resolve("lib/prismic/custom-types", `${typeName}.json`);
+    const outputPath = resolvePrismicRoot("custom-types", `${typeName}.json`);
 
     // write custom type
     outputFileSync(outputPath, JSON.stringify(data, null, 2));
@@ -198,8 +199,8 @@ async function dumpPrismicTypeCommand(args, routeNames) {
 async function dumpAllPrismicTypeCommand() {
   const typesList = await customTypesApi.getAllCustomTypes();
   for (const typeData of typesList) {
-    const outputPath = resolve(
-      "lib/prismic/custom-types",
+    const outputPath = resolvePrismicRoot(
+      "custom-types",
       `${typeData.id}.json`
     );
     outputFileSync(outputPath, JSON.stringify(typeData, null, 2));

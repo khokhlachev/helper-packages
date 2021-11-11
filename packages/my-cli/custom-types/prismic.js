@@ -3,10 +3,14 @@ import fetch from "node-fetch";
 import { createError } from "@khokhlachev/utils";
 import checkEnv from "@khokhlachev/check-env";
 import { readFileSync } from "fs";
+import config from "../shared/config.js";
 
-const { repoName } = await import(resolve("./prismic.config.js"));
+const { repoName } = config.prismic;
 
 const error = createError("prismic-custom-type");
+
+const resolvePrismicRoot = (...segments) =>
+  resolve(config.prismic.rootDir, ...segments);
 
 function fetchApi({ url, body, method }) {
   checkEnv.default(["PRISMIC_CUSTOM_TYPES_API_TOKEN"]);
@@ -25,7 +29,7 @@ function fetchApi({ url, body, method }) {
 function readCustomTypeFile(typeName) {
   try {
     return readFileSync(
-      resolve(`lib/prismic/custom-types/${typeName}.json`),
+      resolvePrismicRoot(`custom-types/${typeName}.json`),
       "utf-8"
     );
   } catch (err) {
