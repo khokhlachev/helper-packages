@@ -1,11 +1,13 @@
 import { resolve } from "path";
 import fetch from "node-fetch";
 import { createError } from "@khokhlachev/utils";
-import checkEnv from "@khokhlachev/check-env";
 import { readFileSync } from "fs";
 import config from "../shared/config.js";
 
 const { repoName } = config.prismic;
+const API_TOKEN =
+  process.env.PRISMIC_CUSTOM_TYPES_API_TOKEN ||
+  new Error("PRISMIC_CUSTOM_TYPES_API_TOKEN is undefined");
 
 const error = createError("prismic-custom-type");
 
@@ -13,13 +15,11 @@ const resolvePrismicRoot = (...segments) =>
   resolve(config.prismic.rootDir, ...segments);
 
 function fetchApi({ url, body, method }) {
-  checkEnv.default(["PRISMIC_CUSTOM_TYPES_API_TOKEN"]);
-
   return fetch(url, {
     method: method || "GET",
     headers: {
       repository: repoName,
-      Authorization: `Bearer ${process.env.PRISMIC_CUSTOM_TYPES_API_TOKEN}`,
+      Authorization: `Bearer ${API_TOKEN}`,
       "Content-Type": "application/json",
     },
     body,
