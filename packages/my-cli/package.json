@@ -1,6 +1,6 @@
 {
   "name": "@khokhlachev/my-cli",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Own helper CLI",
   "author": "Sergey Khokhlachev <sergey@khokhlachev.com>",
   "homepage": "https://github.com/khokhlachev/helper-packages#readme",
