@@ -19,7 +19,9 @@
   "files": [
     "index.js",
     "prismic-custom-types-api.js",
-    "templates/"
+    "templates/",
+    "custom-types/",
+    "shared/"
   ],
   "repository": {
     "type": "git",
